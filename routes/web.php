@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DomainController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,15 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/domains/{domain}', [DomainController::class, 'destroys']);
     Route::resource('/youtube', YoutubeController::class);
 });
+
+// Report
+Route::middleware(['auth'])->group(function () {
+    Route::resource('/report', ReportController::class);
+    Route::get('/reports/create/{domain}', [ReportController::class, 'createReport'])->name('reports.create');
+    Route::get('/reports/result/{domain}', [ReportController::class, 'result'])->name('reports.result');
+    Route::post('/reports/{domain}', [ReportController::class, 'store'])->name('reports.store');
+});
+
 
 
 Route::middleware('auth')->group(function () {

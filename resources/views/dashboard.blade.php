@@ -179,7 +179,7 @@
                                         <button data-modal-target="editDomain2-{{ $items->id }}"
                                             data-modal-toggle="editDomain2-{{ $items->id }}"
                                             class=" w-full text-center h-full p-3   ">
-                                            <p class="truncate font-extrabold text-xl text-start leading-1">
+                                            <p class="truncate font-extrabold text-lg text-start leading-1">
                                                 {{ $items->nama_domain }}
                                             </p>
                                             @if ($items->user)
