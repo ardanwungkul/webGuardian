@@ -15,10 +15,12 @@
                         <th scope="col" class="px-6 py-3">
                             Nama Kategori
                         </th>
+                        @if (Auth::user()->isAdmin == true)
+                            <th scope="col" class="px-6 py-3 text-center">
+                                Action
+                            </th>
+                        @endif
 
-                        <th scope="col" class="px-6 py-3 text-center">
-                            Action
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,15 +34,18 @@
                             <td class="px-6 py-4">
                                 {{ $item->nama_kategori }}
                             </td>
-                            <td class="px-6 py-4 flex items-center justify-center">
-                                <form action="{{ route('kategori.destroy', $item->id) }}" method="POST" class="m-0">
-                                    @csrf
-                                    @method('DELETE')
-                                    <div class="flex items-center justify-center self-center">
-                                        <button class="text-red-600 self-center">Delete</button>
-                                    </div>
-                                </form>
-                            </td>
+                            @if (Auth::user()->isAdmin == true)
+                                <td class="px-6 py-4 flex items-center justify-center">
+                                    <form action="{{ route('kategori.destroy', $item->id) }}" method="POST"
+                                        class="m-0">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="flex items-center justify-center self-center">
+                                            <button class="text-red-600 self-center">Delete</button>
+                                        </div>
+                                    </form>
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

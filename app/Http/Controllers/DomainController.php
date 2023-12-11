@@ -6,6 +6,7 @@ use App\Models\Domain;
 use App\Models\Kategori;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class DomainController extends Controller
@@ -15,10 +16,11 @@ class DomainController extends Controller
      */
     public function index()
     {
+        $isAdmin = Auth::user()->isAdmin;
         $kategori = Kategori::all();
         $user = User::where('isAdmin', false)->get();
         $domain = Domain::all();
-        return view('master.domain.index', compact('domain', 'kategori', 'user'));
+        return view('master.domain.index', compact('domain', 'kategori', 'user', 'isAdmin'));
     }
 
     /**

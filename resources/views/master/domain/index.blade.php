@@ -29,9 +29,12 @@
                             <th scope="col" class="px-6 py-3">
                                 Status Sitemap
                             </th>
-                            <th scope="col" class="px-6 py-3 text-center">
-                                Action
-                            </th>
+                            @if (Auth::user()->isAdmin == true)
+                                <th scope="col" class="px-6 py-3 text-center">
+                                    Action
+                                </th>
+                            @endif
+
                         </tr>
                     </thead>
                 </table>
@@ -150,11 +153,13 @@
                         return selectElement.prop('outerHTML');
                     }
                 },
-                {
-                    data: 'action',
-                    name: 'action',
-                    sortable: false
-                },
+                @if ($isAdmin)
+                    {
+                        data: 'action',
+                        name: 'action',
+                        sortable: false
+                    },
+                @endif
             ]
         });
 

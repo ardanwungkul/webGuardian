@@ -134,15 +134,17 @@
                                                                     <x-modal.edit.edit-domain :domain="$items"
                                                                         :kategori="$kategori"
                                                                         :user="$user"></x-modal.edit.edit-domain>
-                                                                    <form
-                                                                        action="{{ route('domain.destroy', $items->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button class="text-red-600">
-                                                                            Delete
-                                                                        </button>
-                                                                    </form>
+                                                                    @if (Auth::user()->isAdmin == true)
+                                                                        <form
+                                                                            action="{{ route('domain.destroy', $items->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button class="text-red-600">
+                                                                                Delete
+                                                                            </button>
+                                                                        </form>
+                                                                    @endif
                                                                 </div>
                                                             </td>
                                                         </tr>

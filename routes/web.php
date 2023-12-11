@@ -25,15 +25,17 @@ Route::get('/', function () {
 
 
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::resource('/kategori', KategoriController::class);
     Route::resource('/domain', DomainController::class);
-    Route::resource('/user', UserController::class);
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+});
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('/user', UserController::class);
 });
 
 // Ajax
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::put('/kategoris/nama-kategori', [KategoriController::class, 'namaKategori']);
     Route::put('/domains/status-keterangan', [DomainController::class, 'statusKeterangan']);
     Route::put('/domains/status-sitemap', [DomainController::class, 'statusSitemap']);
