@@ -5,6 +5,7 @@ use App\Http\Controllers\DomainController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\YoutubeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/domains/status-sitemap', [DomainController::class, 'statusSitemap']);
     Route::get('/domains/get', [DomainController::class, 'getData']);
     Route::delete('/domains/{domain}', [DomainController::class, 'destroys']);
+    Route::resource('/youtube', YoutubeController::class);
 });
 
 
