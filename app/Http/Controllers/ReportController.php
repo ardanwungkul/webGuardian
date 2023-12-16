@@ -6,9 +6,36 @@ use App\Models\Domain;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class ReportController extends Controller
 {
+    public function getData(Request $request)
+    {
+        $data = Domain::all();
+        if ($request->ajax()) {
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '
+                            <div class="flex items-center justify-center gap-2">
+                                <a href="/reports/create/' . $row->id . '">
+                                    Buat Report
+                                </a>
+                                <a href="/reports/result/' . $row->id . '" target="_blank">
+                                    Hasil Report
+                                </a>
+                                <button class="editButton" data-domain-id="' . $row->id . '" data-domain-id="' . $row->id . '">
+                                Edit
+                            </button>
+                            </div>
+                        ';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
     public function index()
     {
         $domain = Domain::all();

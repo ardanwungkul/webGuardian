@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('link_youtube');
             $table->string('judul')->nullable();
             $table->longText('keterangan')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

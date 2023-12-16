@@ -23,14 +23,30 @@
                                 <a href="{{ route('youtube.show', $item->id) }}">
                                     <div class="flex gap-2">
                                         <div class="flex-none">
-                                            <iframe class="w-[168px] h-[94px] rounded-lg"
-                                                src="{{ $item->link_youtube }}" title="YouTube video player"
-                                                frameborder="0"
-                                                allow="accelerometer;  clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                allowfullscreen></iframe>
+                                            @if ($item->thumbnail !== null)
+                                                <a href="{{ route('youtube.show', $item->id) }}">
+                                                    <img src="{{ $item->thumbnail }}"
+                                                        class="w-[168px] h-[94px] rounded-lg object-cover">
+                                                </a>
+                                            @elseif($item->image !== null)
+                                                <a href="{{ route('youtube.show', $item->id) }}">
+                                                    <img src="{{ asset('storage/images/youtube') }}/{{ $item->image }}"
+                                                        class="w-[168px] h-[94px] rounded-lg object-cover">
+                                                </a>
+                                            @else
+                                                <iframe class="w-[168px] h-[94px] rounded-lg"
+                                                    src="{{ $item->link_youtube }}" title="YouTube video player"
+                                                    frameborder="0"
+                                                    allow="accelerometer;  clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    allowfullscreen>
+                                                </iframe>
+                                            @endif
                                         </div>
                                         <div>
-                                            <p class="text-gray-800 text-sm line-clamp-2 mt-2">{{ $item->judul }}</p>
+                                            <a href="{{ route('youtube.show', $item->id) }}">
+                                                <p class="text-gray-800 text-sm line-clamp-2 mt-2">{{ $item->judul }}
+                                                </p>
+                                            </a>
                                         </div>
                                     </div>
                                 </a>

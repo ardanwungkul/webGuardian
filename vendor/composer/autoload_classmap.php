@@ -6,6 +6,10 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Alaouy\\Youtube\\Facades\\Youtube' => $vendorDir . '/alaouy/youtube/src/Facades/Youtube.php',
+    'Alaouy\\Youtube\\Rules\\ValidYoutubeVideo' => $vendorDir . '/alaouy/youtube/src/Rules/ValidYoutubeVideo.php',
+    'Alaouy\\Youtube\\Youtube' => $vendorDir . '/alaouy/youtube/src/Youtube.php',
+    'Alaouy\\Youtube\\YoutubeServiceProvider' => $vendorDir . '/alaouy/youtube/src/YoutubeServiceProvider.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => $baseDir . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
@@ -22,7 +26,9 @@ return array(
     'App\\Http\\Controllers\\DomainController' => $baseDir . '/app/Http/Controllers/DomainController.php',
     'App\\Http\\Controllers\\KategoriController' => $baseDir . '/app/Http/Controllers/KategoriController.php',
     'App\\Http\\Controllers\\ProfileController' => $baseDir . '/app/Http/Controllers/ProfileController.php',
+    'App\\Http\\Controllers\\ReportController' => $baseDir . '/app/Http/Controllers/ReportController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
+    'App\\Http\\Controllers\\YoutubeController' => $baseDir . '/app/Http/Controllers/YoutubeController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
@@ -38,7 +44,9 @@ return array(
     'App\\Http\\Requests\\ProfileUpdateRequest' => $baseDir . '/app/Http/Requests/ProfileUpdateRequest.php',
     'App\\Models\\Domain' => $baseDir . '/app/Models/Domain.php',
     'App\\Models\\Kategori' => $baseDir . '/app/Models/Kategori.php',
+    'App\\Models\\Report' => $baseDir . '/app/Models/Report.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
+    'App\\Models\\Youtube' => $baseDir . '/app/Models/Youtube.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

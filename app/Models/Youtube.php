@@ -11,6 +11,8 @@ class Youtube extends Model
     protected $fillable = [
         'link_youtube',
         'keterangan',
-        'judul'
+        'judul',
+        'thumbnail',
+        'image'
     ];
 }

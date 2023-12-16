@@ -6,7 +6,6 @@
                 Youtube</button>
             @include('components.modal.add.add-youtube')
         </div>
-
         <div class="">
             <div class="grid grid-cols-4 gap-3">
                 @foreach ($youtube as $item)
@@ -51,12 +50,23 @@
                         @endif
 
                         <div class="rounded-lg">
-                            <div class="">
-                                <iframe class="w-full h-full rounded-lg" src="{{ $item->link_youtube }}"
-                                    title="YouTube video player" frameborder="0"
-                                    allow="accelerometer;  clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowfullscreen></iframe>
-                            </div>
+                            @if ($item->thumbnail !== null)
+                                <a href="{{ route('youtube.show', $item->id) }}">
+                                    <img src="{{ $item->thumbnail }}" class="w-full h-[150px] object-cover rounded-lg">
+                                </a>
+                            @elseif($item->image !== null)
+                                <a href="{{ route('youtube.show', $item->id) }}">
+                                    <img src="{{ asset('/storage/images/youtube') }}/{{ $item->image }}"
+                                        class="w-full h-[150px] object-cover rounded-lg">
+                                </a>
+                            @else
+                                <div class="">
+                                    <iframe class="w-full h-full object-cover rounded-lg"
+                                        src="{{ $item->link_youtube }}" title="YouTube video player" frameborder="0"
+                                        allow="accelerometer;  clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen></iframe>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endforeach

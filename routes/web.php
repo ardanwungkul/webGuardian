@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/domains/status-keterangan', [DomainController::class, 'statusKeterangan']);
     Route::put('/domains/status-sitemap', [DomainController::class, 'statusSitemap']);
     Route::get('/domains/get', [DomainController::class, 'getData']);
+    Route::get('/reports/get', [ReportController::class, 'getData']);
     Route::delete('/domains/{domain}', [DomainController::class, 'destroys']);
     Route::resource('/youtube', YoutubeController::class);
 });

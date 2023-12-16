@@ -23,11 +23,54 @@
             </div>
             <!-- Modal body -->
             <div class="px-6 py-3 space-y-6 cp-4">
-                <form action="{{ route('youtube.update', $youtube->id) }}" method="POST">
+                <form action="{{ route('youtube.update', $youtube->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="thumbnail{{ $youtube->id }}" name="thumbnail" class="hidden"
+                            value="{{ $youtube->thumbnail }}">
                         <div class="col-span-2">
+                            <div class="flex justify-center">
+                                <div class="relative">
+                                    @if ($youtube->thumbnail !== null)
+                                        <img id="fotoProfil-{{ $youtube->id }}" class="object-cover w-40 h-40"
+                                            src="{{ $youtube->thumbnail }}" alt="">
+                                    @elseif($youtube->image !== null)
+                                        <img id="fotoProfil-{{ $youtube->id }}" class="object-cover w-40 h-40"
+                                            src="{{ asset('storage/images/youtube') }}/{{ $youtube->image }}"
+                                            alt="">
+                                    @else
+                                        <img id="fotoProfil-{{ $youtube->id }}" class="object-cover w-40 h-40"
+                                            src="{{ asset('storage/images/youtube') }}/youtube.png" alt="">
+                                    @endif
+                                    <div class="absolute z-10 top-0  opacity-0 hover:opacity-100">
+                                        <label for="fotoProfilInput-{{ $youtube->id }}">
+                                            <div class="w-40 h-40 bg-black opacity-60 flex items-center">
+                                                <p class="text-center w-full"><i class="fa-solid fa-pen"
+                                                        style="color: #ffffff;"></i>
+                                                </p>
+                                            </div>
+                                            <input accept="image/*" type="file" name="image" class="hidden"
+                                                id="fotoProfilInput-{{ $youtube->id }}" />
+
+                                        </label>
+                                    </div>
+                                    <script>
+                                        const fotoProfilInput{{ $youtube->id }} = document.getElementById('fotoProfilInput-{{ $youtube->id }}');
+                                        const fotoProfil{{ $youtube->id }} = document.getElementById('fotoProfil-{{ $youtube->id }}');
+                                        const thumbnail{{ $youtube->id }} = document.getElementById('thumbnail{{ $youtube->id }}');
+
+                                        fotoProfilInput{{ $youtube->id }}.onchange = evt => {
+                                            const [file] = fotoProfilInput{{ $youtube->id }}.files;
+                                            if (file) {
+                                                fotoProfil{{ $youtube->id }}.src = URL.createObjectURL(file);
+                                                thumbnail{{ $youtube->id }}.value = '';
+                                            }
+                                        };
+                                    </script>
+                                </div>
+                            </div>
+
                             <label for="link_youtube"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Link
                                 Youtube*</label>

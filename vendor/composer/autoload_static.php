@@ -181,6 +181,7 @@ class ComposerStaticInitec80350aa35b073093f4362c44b9852d
         'A' => 
         array (
             'App\\' => 4,
+            'Alaouy\\Youtube\\' => 15,
         ),
     );
 
@@ -539,9 +540,17 @@ class ComposerStaticInitec80350aa35b073093f4362c44b9852d
             0 => __DIR__ . '/../..' . '/app',
             1 => __DIR__ . '/..' . '/laravel/pint/app',
         ),
+        'Alaouy\\Youtube\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alaouy/youtube/src',
+        ),
     );
 
     public static $classMap = array (
+        'Alaouy\\Youtube\\Facades\\Youtube' => __DIR__ . '/..' . '/alaouy/youtube/src/Facades/Youtube.php',
+        'Alaouy\\Youtube\\Rules\\ValidYoutubeVideo' => __DIR__ . '/..' . '/alaouy/youtube/src/Rules/ValidYoutubeVideo.php',
+        'Alaouy\\Youtube\\Youtube' => __DIR__ . '/..' . '/alaouy/youtube/src/Youtube.php',
+        'Alaouy\\Youtube\\YoutubeServiceProvider' => __DIR__ . '/..' . '/alaouy/youtube/src/YoutubeServiceProvider.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
@@ -558,7 +567,9 @@ class ComposerStaticInitec80350aa35b073093f4362c44b9852d
         'App\\Http\\Controllers\\DomainController' => __DIR__ . '/../..' . '/app/Http/Controllers/DomainController.php',
         'App\\Http\\Controllers\\KategoriController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
+        'App\\Http\\Controllers\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Controllers\\YoutubeController' => __DIR__ . '/../..' . '/app/Http/Controllers/YoutubeController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -574,7 +585,9 @@ class ComposerStaticInitec80350aa35b073093f4362c44b9852d
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Models\\Domain' => __DIR__ . '/../..' . '/app/Models/Domain.php',
         'App\\Models\\Kategori' => __DIR__ . '/../..' . '/app/Models/Kategori.php',
+        'App\\Models\\Report' => __DIR__ . '/../..' . '/app/Models/Report.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\Youtube' => __DIR__ . '/../..' . '/app/Models/Youtube.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
