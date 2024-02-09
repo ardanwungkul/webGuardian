@@ -126,6 +126,10 @@
                             @endforeach
                         </div>
                     @endforeach
+                @else
+                    <div class=" font-extrabold text-2xl text-center">
+                        Tidak Ada Laporan Tersedia</div>
+                    <div>
                 @endif
             </div>
         </div>
