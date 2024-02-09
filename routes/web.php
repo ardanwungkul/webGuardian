@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/kategoris/nama-kategori', [KategoriController::class, 'namaKategori']);
     Route::put('/domains/status-keterangan', [DomainController::class, 'statusKeterangan']);
     Route::put('/domains/status-sitemap', [DomainController::class, 'statusSitemap']);
+    Route::put('/domains/status-nerd', [DomainController::class, 'statusNerd']);
     Route::get('/domains/get', [DomainController::class, 'getData']);
     Route::get('/reports/get', [ReportController::class, 'getData']);
     Route::delete('/domains/{domain}', [DomainController::class, 'destroys']);
@@ -50,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('/report', ReportController::class);
     Route::get('/reports/create/{domain}', [ReportController::class, 'createReport'])->name('reports.create');
-    Route::get('/reports/result/{domain}', [ReportController::class, 'result'])->name('reports.result');
+    Route::get('/reports/result/{domain}/{slug}', [ReportController::class, 'result'])->name('reports.result');
     Route::post('/reports/{domain}', [ReportController::class, 'store'])->name('reports.store');
 });
 

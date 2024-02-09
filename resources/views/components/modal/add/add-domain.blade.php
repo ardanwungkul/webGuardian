@@ -1,6 +1,6 @@
 <!-- Main modal -->
 <div id="addDomainModal" tabindex="-1" aria-hidden="true"
-    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-none backdrop-blur-md">
     <form class="relative w-full max-w-2xl max-h-full" action="{{ route('domain.store') }}" method="POST">
         @csrf
         @method('POST')
@@ -10,7 +10,7 @@
                 <!-- Modal header -->
                 <div class="flex items-start justify-between px-6 py-3 border-b rounded-t dark:border-gray-600 cp-3">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                        Tambah SEO
+                        Tambah Domain
                     </h3>
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -33,7 +33,7 @@
                             <select id="kategori_id" name="kategori_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required>
-                                <option disabled selected>Pilih Kategori</option>
+                                <option disabled selected value="">Pilih Kategori</option>
                                 @foreach ($kategori as $items)
                                     <option value="{{ $items->id }}">{{ $items->nama_kategori }}</option>
                                 @endforeach

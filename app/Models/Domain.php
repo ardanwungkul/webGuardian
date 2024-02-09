@@ -15,7 +15,11 @@ class Domain extends Model
         'status_sitemap',
         'user_id',
         'kategori_id',
-        'catatan'
+        'catatan',
+        'status_nerd',
+        'slug',
+        'internal_report',
+        'status_nerd_update'
     ];
 
     public function kategori()

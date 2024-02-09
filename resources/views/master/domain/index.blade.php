@@ -27,6 +27,9 @@
                                 Status Generate
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Status Nerd
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Status Sitemap
                             </th>
                             @if (Auth::user()->isAdmin == true)
@@ -106,6 +109,44 @@
                                     _token: '{{ csrf_token() }}',
                                     domain: domainId,
                                     status_keterangan: status
+                                },
+                                success: function(response) {
+                                    console.log(response);
+                                    loading.style.display = 'none';
+                                },
+                                error: function(error) {}
+                            });
+                        });
+
+
+                        return selectElement.prop('outerHTML');
+                    }
+                },
+                {
+                    data: 'status_nerd',
+                    name: 'status_nerd',
+                    sortable: false,
+                    render: function(data, type, full, meta) {
+                        let selectUndone = (data === 'UnDone') ? 'selected' : '';
+                        let selectDone = (data === 'Done') ? 'selected' : '';
+
+                        let selectElement = $(`<select class="border-none focus:ring-0 bg-transparent text-sm status_nerd" data-domain-id="${full.id}">
+                                                    <option value="Running" ${selectUndone}>UnDone</option>
+                                                    <option value="Done" ${selectDone}>Done</option>
+                                                </select>`);
+
+                        $('body').on('change', '.status_nerd', function() {
+                            var status = $(this).val();
+                            var domainId = $(this).data('domain-id');
+                            loading.style.display = 'block';
+
+                            $.ajax({
+                                url: '/domains/status-nerd',
+                                method: 'PUT',
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+                                    domain: domainId,
+                                    status_nerd: status
                                 },
                                 success: function(response) {
                                     console.log(response);

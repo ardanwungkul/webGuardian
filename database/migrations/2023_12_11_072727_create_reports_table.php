@@ -18,6 +18,8 @@ return new class extends Migration
             $table->date('tanggal_report');
             $table->unsignedBigInteger('domain_id');
             $table->foreign('domain_id')->references('id')->on('domains')->onDelete('cascade');
+            $table->string('link_youtube')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

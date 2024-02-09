@@ -79,7 +79,7 @@
             @if (Auth::user()->isSupport == true)
                 <div class=" rounded-b-lg py-3">
                     <div class="grid grid-cols-1 px-3">
-                        <a href="{{ route('report', $domain->id) }}" target="_blank"
+                        <a href="{{ route('reports.create', $domain->id) }}" target="_blank"
                             class="cp-1 px-3 py-2 text-black font-extrabold rounded-lg text-center">Buat Report</a>
                     </div>
                 </div>

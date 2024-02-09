@@ -1,17 +1,19 @@
 <x-app-layout>
     <div class="space-y-3 pt-3">
-        <div class="px-3 flex gap-3">
-            <div>
-                <button class="cp-1 text-sm rounded-lg p-3 font-bold" data-modal-target="addKategoriModal"
-                    data-modal-toggle="addKategoriModal">Tambah Kategori</button>
+        @if (Auth::user()->isAdmin == true)
+            <div class="px-3 flex gap-3">
+                <div>
+                    <button class="cp-1 text-sm rounded-lg p-3 font-bold" data-modal-target="addKategoriModal"
+                        data-modal-toggle="addKategoriModal">Tambah Kategori</button>
+                </div>
+                @include('components.modal.add.add-kategori')
+                <div>
+                    <button class="cp-1 text-sm rounded-lg p-3 font-bold" data-modal-target="addDomainModal"
+                        data-modal-toggle="addDomainModal">Tambah Domain</button>
+                </div>
+                @include('components.modal.add.add-domain')
             </div>
-            @include('components.modal.add.add-kategori')
-            <div>
-                <button class="cp-1 text-sm rounded-lg p-3 font-bold" data-modal-target="addDomainModal"
-                    data-modal-toggle="addDomainModal">Tambah Domain</button>
-            </div>
-            @include('components.modal.add.add-domain')
-        </div>
+        @endif
         <div class="px-3">
             <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab"
@@ -76,6 +78,9 @@
                                                             Status Generate
                                                         </th>
                                                         <th scope="col" class="px-6 py-3">
+                                                            Status Nerd
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3">
                                                             Status Sitemap
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center">
@@ -85,69 +90,13 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($item->domain as $items)
-                                                        <tr
-                                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                            <th scope="row"
-                                                                class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                                                {{ $loop->index + 1 }}
-                                                            </th>
-                                                            <td class="px-6 py-4">
-                                                                {{ $items->nama_domain }}
-                                                            </td>
-                                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                                @if ($items->user)
-                                                                    {{ $items->user->name }}
-                                                                @endif
-                                                            </td>
-                                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                                <select
-                                                                    class="border-none focus:ring-0 bg-transparent text-sm status_keterangan"
-                                                                    data-domain-id="{{ $items->id }}">
-                                                                    <option value="Running"
-                                                                        @if ($items->status_keterangan == 'Running') selected @endif>
-                                                                        Running</option>
-                                                                    <option value="Done"
-                                                                        @if ($items->status_keterangan == 'Done') selected @endif>
-                                                                        Done</option>
-                                                                </select>
-                                                            </td>
-                                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                                <select
-                                                                    class="border-none focus:ring-0 bg-transparent text-sm status_sitemap"
-                                                                    data-domain-id="{{ $items->id }}">
-                                                                    <option value="Undone"
-                                                                        @if ($items->status_sitemap == 'Undone') selected @endif>
-                                                                        Undone</option>
-                                                                    <option value="Done"
-                                                                        @if ($items->status_sitemap == 'Done') selected @endif>
-                                                                        Done</option>
-                                                                </select>
-                                                            </td>
-                                                            <td class="px-6 py-4 ">
-                                                                <div
-                                                                    class="font-medium text-blue-600 dark:text-blue-500 flex items-center justify-center gap-3">
-                                                                    <button class=""
-                                                                        data-modal-target="editDomain-{{ $items->id }}"
-                                                                        data-modal-toggle="editDomain-{{ $items->id }}">
-                                                                        Edit
-                                                                    </button>
-                                                                    <x-modal.edit.edit-domain :domain="$items"
-                                                                        :kategori="$kategori"
-                                                                        :user="$user"></x-modal.edit.edit-domain>
-                                                                    @if (Auth::user()->isAdmin == true)
-                                                                        <form
-                                                                            action="{{ route('domain.destroy', $items->id) }}"
-                                                                            method="POST">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button class="text-red-600">
-                                                                                Delete
-                                                                            </button>
-                                                                        </form>
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                        @if (Auth::user()->isAdmin == true)
+                                                            @include('components.item.table-domain')
+                                                        @else
+                                                            @if ($items->user_id == Auth::user()->id)
+                                                                @include('components.item.table-domain')
+                                                            @endif
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -174,40 +123,13 @@
                         <div class="grid grid-cols-5 gap-3">
                             @foreach ($domain as $items)
                                 @if ($items->kategori_id == $item->id)
-                                    <div
-                                        class="border h-20 rounded-lg  @if ($items->status_keterangan == 'Running') running @elseif($items->status_keterangan == 'Done') done @endif relative">
-                                        <button data-modal-target="editDomain2-{{ $items->id }}"
-                                            data-modal-toggle="editDomain2-{{ $items->id }}"
-                                            class=" w-full text-center h-full p-3   ">
-                                            <p class="truncate font-extrabold text-lg text-start leading-1">
-                                                {{ $items->nama_domain }}
-                                            </p>
-                                            @if ($items->user)
-                                                <p
-                                                    class="truncate font-extrabold text-start text-sm leading-none text-gray-200">
-                                                    {{ $items->user->name }}
-                                                </p>
-                                            @endif
-                                        </button>
-                                        <x-modal.edit.edit-domain2 :domain="$items" :kategori="$kategori"
-                                            :user="$user"></x-modal.edit.edit-domain2>
-                                        <div class="absolute top-2 right-2 rounded flex gap-1">
-                                            @if ($items->report)
-                                                <a href="//{{ $items->report }}" target="_blank" title="Link Report"
-                                                    class="hover:bg-white hover:bg-opacity-25 rounded-lg">
-                                                    <svg width="20" height="20" viewBox="0 0 21 21"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <g id="Interface / External_Link">
-                                                            <path id="Vector"
-                                                                d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11"
-                                                                stroke="#ffffff" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </g>
-                                                    </svg>
-                                                </a>
-                                            @endif
-                                        </div>
-                                    </div>
+                                    @if (Auth::user()->isAdmin == true)
+                                        @include('components.item.grid-domain-item')
+                                    @else
+                                        @if ($items->user_id == Auth::user()->id)
+                                            @include('components.item.grid-domain-item')
+                                        @endif
+                                    @endif
                                 @endif
                             @endforeach
                         </div>
@@ -278,5 +200,54 @@
                 error: function(error) {}
             });
         });
+        $('.status_nerd').on('change', function() {
+            var status = $(this).val();
+            var domainId = $(this).data('domain-id');
+            loading.style.display = 'block';
+            $.ajax({
+                url: '/domains/status-nerd',
+                method: 'PUT',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    domain: domainId,
+                    status_nerd: status
+                },
+                success: function(response) {
+                    console.log(response);
+                    loading.style.display = 'none';
+                },
+                error: function(error) {}
+            });
+        });
     });
+</script>
+<script>
+    window.onload = function() {
+        const checkboxes = document.querySelectorAll('.internalReport');
+        const textInputs = document.querySelectorAll('.linkReport');
+        const appUrl = "{{ env('APP_URL') }}";
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                var id = this.getAttribute('data-id');
+                var relatedTextInput = document.querySelector('.linkReport[data-id="' + id + '"]');
+                var relatedTextInputs = document.querySelector('.linkReports[data-id="' + id +
+                    '"]');
+                var valueInput = relatedTextInput.getAttribute('data-value');
+                var namaDomain = relatedTextInput.getAttribute('data-domain');
+                var slug = relatedTextInput.getAttribute('data-slug');
+                if (this.checked) {
+                    relatedTextInput.setAttribute('readonly', 'readonly');
+                    relatedTextInputs.setAttribute('readonly', 'readonly');
+                    relatedTextInput.value = appUrl + '/reports/result/' + id + '/' + slug;
+                    relatedTextInputs.value = appUrl + '/reports/result/' + id + '/' + slug;
+                } else {
+                    relatedTextInputs.value = valueInput;
+                    relatedTextInput.value = valueInput;
+                    relatedTextInput.removeAttribute('readonly');
+                    relatedTextInputs.removeAttribute('readonly');
+                }
+            });
+        });
+    };
 </script>

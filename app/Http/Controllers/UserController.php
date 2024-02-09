@@ -17,6 +17,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = new User();
+        $user->isSupport = true;
         $user->fill($request->all())->save();
         return redirect()->back()->with(['success' => 'Berhasil Menambahkan User']);
     }
@@ -42,5 +43,10 @@ class UserController extends Controller
         $users = User::where('isAdmin', false);
         $kategori = Kategori::all();
         return view('master.user.show', compact('user', 'kategori', 'users'));
+    }
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->back()->with(['success' => 'Berhasil Menghapus User']);
     }
 }

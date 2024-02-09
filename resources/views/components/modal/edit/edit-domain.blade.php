@@ -41,18 +41,21 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-span-2">
-                            <label for="user_id"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User</label>
-                            <select id="user_id" name="user_id"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="" selected>Pilih User</option>
-                                @foreach ($user as $items)
-                                    <option value="{{ $items->id }}"
-                                        @if ($items->id == $domain->user_id) selected @endif>{{ $items->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @if (Auth::user()->isAdmin == true)
+                            <div class="col-span-2">
+                                <label for="user_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User</label>
+                                <select id="user_id" name="user_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="" selected>Pilih User</option>
+                                    @foreach ($user as $items)
+                                        <option value="{{ $items->id }}"
+                                            @if ($items->id == $domain->user_id) selected @endif>{{ $items->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
                         <div class="col-span-2">
                             <label for="nama_domain"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
@@ -62,12 +65,25 @@
                                 placeholder="Masukkan Nama Domain" value="{{ $domain->nama_domain }}" required>
                         </div>
                         <div class="col-span-2">
-                            <label for="report"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Link
-                                Report</label>
-                            <input type="text" id="report" name="report"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Masukkan Link Report" value="{{ $domain->report }}">
+                            <div class="flex justify-between">
+                                <label for="link_report"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Link
+                                    Report</label>
+                                <div class="flex gap-1 items-center">
+                                    <input type="checkbox" name="internalReport" id="internalReport"
+                                        class="rounded-full internalReport" data-id="{{ $domain->id }}"
+                                        {{ $domain->internalReport == true ? 'checked' : '' }}>
+                                    <label for="internalReport"
+                                        class="block text-sm font-medium text-gray-900 dark:text-white">
+                                        Internal</label>
+                                </div>
+                            </div>
+                            <input type="text" id="link_report" name="report"
+                                data-domain="{{ $domain->nama_domain }}" data-value="{{ $domain->report }}"
+                                class="linkReport bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Masukkan Link Report" value="{{ $domain->report }}"
+                                data-id="{{ $domain->id }}" data-slug="{{ $domain->slug }}"
+                                {{ $domain->internalReport == true ? 'readonly' : '' }}>
                         </div>
                         <div class="col-span-2">
                             <label for="catatan"

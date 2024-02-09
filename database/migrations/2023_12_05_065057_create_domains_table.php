@@ -18,10 +18,14 @@ return new class extends Migration
             $table->string('catatan')->nullable();
             $table->enum('status_keterangan', ['Running', 'Done'])->default('Running');
             $table->enum('status_sitemap', ['Undone', 'Done'])->default('Undone');
+            $table->enum('status_nerd', ['UnDone', 'Done'])->default('Undone');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('kategori_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('kategori_id')->references('id')->on('kategoris')->onDelete('cascade');
+            $table->boolean('internalReport')->default(false);
+            $table->string('slug');
+            $table->date('status_nerd_update')->nullable();
             $table->timestamps();
         });
     }

@@ -14,6 +14,8 @@ class Report extends Model
         'tanggal_report',
         'judul',
         'domain_id',
+        'link_youtube',
+        'image'
     ];
     public function domain()
     {
