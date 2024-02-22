@@ -26,6 +26,13 @@ class DashboardController extends Controller
         }
         $user = User::where('isAdmin', false)->get();
         $domain = Domain::all();
-        return view('dashboard', compact('kategori', 'user', 'domain'));
+        $apiResponse = Http::get('https://client.webz.biz/api/domain');
+        $apiDomain = $apiResponse->json();
+        return view('dashboard', compact(
+            'kategori',
+            'user',
+            'domain',
+            'apiDomain'
+        ));
     }
 }

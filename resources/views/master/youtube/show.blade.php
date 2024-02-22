@@ -11,7 +11,16 @@
                 <div>
                     <p class="text-xl text-black font-extrabold my-2">{{ $youtube->judul }}</p>
                     <div class="w-full cp-1 rounded-lg p-3 text-gray-800">
-                        {!! nl2br(e($youtube->keterangan)) !!}
+                        <p>
+                            {!! nl2br(e($youtube->keterangan)) !!}
+                        </p>
+                        <div class="flex flex-wrap gap-1 mt-3">
+                            @foreach ($youtube->users as $user)
+                                <div class="bg-gray-100 w-min whitespace-nowrap rounded-lg px-3 py-1 text-xs">
+                                    {{ $user->name }}
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>

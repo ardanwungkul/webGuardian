@@ -15,4 +15,9 @@ class Youtube extends Model
         'thumbnail',
         'image'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_youtubes');
+    }
 }

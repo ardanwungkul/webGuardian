@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 
@@ -21,12 +22,14 @@ class DomainController extends Controller
         $isAdmin = Auth::user()->isAdmin;
         $kategori = Kategori::all();
         $user = User::where('isAdmin', false)->get();
+        $apiResponse = Http::get('https://client.webz.biz/api/domain');
+        $apiDomain = $apiResponse->json();
         if (Auth::user()->isAdmin == true) {
             $domain = Domain::all();
         } else {
             $domain = Domain::where('user_id', Auth::user()->id)->get();
         }
-        return view('master.domain.index', compact('domain', 'kategori', 'user', 'isAdmin'));
+        return view('master.domain.index', compact('domain', 'kategori', 'user', 'isAdmin', 'apiDomain'));
     }
 
     /**

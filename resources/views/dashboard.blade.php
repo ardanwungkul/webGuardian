@@ -44,7 +44,8 @@
                                     <button type="button"
                                         class="flex items-center justify-between w-full p-3 rounded-lg font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
                                         data-accordion-target="#accordion-open-body-{{ $item->id }}"
-                                        aria-expanded="false" aria-controls="accordion-open-body-{{ $item->id }}">
+                                        aria-controls="accordion-open-body-{{ $item->id }}"
+                                        {{ $loop->first ? 'aria-expanded=true' : 'aria-expanded="false"' }}>
                                         <span class="flex items-center gap-2 w-full">
                                             <p>
                                                 {{ $loop->index + 1 }}.
@@ -60,14 +61,15 @@
                                 <div id="accordion-open-body-{{ $item->id }}" class="hidden"
                                     aria-labelledby="accordion-open-heading-{{ $item->id }}">
                                     <div class="p-3 border rounded-lg mt-2 border-gray-200 dark:border-gray-700">
+                                        <input type="text" class="text-sm rounded-lg mb-2 w-full"
+                                            onkeyup="searchFunction(this.value,{{ $item->id }})"
+                                            placeholder="Search .....">
                                         <div class="rounded-lg overflow-hidden">
-                                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                            <table class="w-full text-left text-gray-500 dark:text-gray-400"
+                                                id="tablesDomain-{{ $item->id }}">
                                                 <thead
                                                     class="text-xs text-gray-700 uppercase cp-1 dark:bg-gray-700 dark:text-gray-400">
                                                     <tr>
-                                                        <th scope="col" class="px-6 py-3">
-                                                            No
-                                                        </th>
                                                         <th scope="col" class="px-6 py-3">
                                                             Nama Domain
                                                         </th>
@@ -82,6 +84,9 @@
                                                         </th>
                                                         <th scope="col" class="px-6 py-3">
                                                             Status Sitemap
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3">
+                                                            Tanggal Expired
                                                         </th>
                                                         <th scope="col" class="px-6 py-3 text-center">
                                                             Action
@@ -113,11 +118,19 @@
                         <div class="flex gap-2 justify-between pb-2">
                             <div class="flex items-center gap-2 justify-center w-full">
                                 <div class="w-3 h-3 bg-blue-600"></div>
-                                <p>Running</p>
+                                <p>UnComplete</p>
                             </div>
                             <div class="flex items-center gap-2 justify-center w-full">
-                                <div class="w-3 h-3 bg-green-600"></div>
-                                <p>Done</p>
+                                <div class="w-3 h-3 bg-green-500"></div>
+                                <p>On Proccess</p>
+                            </div>
+                            <div class="flex items-center gap-2 justify-center w-full">
+                                <div class="w-3 h-3 bg-green-700"></div>
+                                <p>Complete</p>
+                            </div>
+                            <div class="flex items-center gap-2 justify-center w-full">
+                                <div class="w-3 h-3 bg-red-500"></div>
+                                <p>Expired</p>
                             </div>
                         </div>
                         <div class="grid grid-cols-5 gap-3">
@@ -163,9 +176,13 @@
             });
         });
         $('.status_keterangan').on('change', function() {
-            var status = $(this).val();
             var domainId = $(this).data('domain-id');
             loading.style.display = 'block';
+            if (this.checked) {
+                var status = 'Done';
+            } else {
+                var status = 'Running'
+            }
             $.ajax({
                 url: '/domains/status-keterangan',
                 method: 'PUT',
@@ -177,14 +194,19 @@
                 success: function(response) {
                     console.log(response);
                     loading.style.display = 'none';
+                    updateRowColor(domainId);
                 },
                 error: function(error) {}
             });
         });
         $('.status_sitemap').on('change', function() {
-            var status = $(this).val();
             var domainId = $(this).data('domain-id');
             loading.style.display = 'block';
+            if (this.checked) {
+                var status = 'Done';
+            } else {
+                var status = 'Undone'
+            }
             $.ajax({
                 url: '/domains/status-sitemap',
                 method: 'PUT',
@@ -196,14 +218,19 @@
                 success: function(response) {
                     console.log(response);
                     loading.style.display = 'none';
+                    updateRowColor(domainId);
                 },
                 error: function(error) {}
             });
         });
         $('.status_nerd').on('change', function() {
-            var status = $(this).val();
             var domainId = $(this).data('domain-id');
             loading.style.display = 'block';
+            if (this.checked) {
+                var status = 'Done';
+            } else {
+                var status = 'Undone'
+            }
             $.ajax({
                 url: '/domains/status-nerd',
                 method: 'PUT',
@@ -213,12 +240,28 @@
                     status_nerd: status
                 },
                 success: function(response) {
-                    console.log(response);
                     loading.style.display = 'none';
+                    updateRowColor(domainId);
                 },
                 error: function(error) {}
             });
         });
+
+
+        function updateRowColor(domainId) {
+            const trTable = document.getElementById('tableDomain-' + domainId);
+            const nerd = $('.status_nerd[data-domain-id="' + domainId + '"]')[0].checked;
+            const keterangan = $('.status_keterangan[data-domain-id="' + domainId + '"]')[0].checked;
+            const sitemap = $('.status_sitemap[data-domain-id="' + domainId + '"]')[0].checked;
+
+            if (nerd == false && keterangan == false && sitemap == false) {
+                trTable.style.backgroundColor = 'white';
+            } else if (nerd == true && keterangan == true && sitemap == true) {
+                trTable.style.backgroundColor = '#22c55e';
+            } else {
+                trTable.style.backgroundColor = '#86efac';
+            }
+        }
     });
 </script>
 <script>
@@ -250,4 +293,40 @@
             });
         });
     };
+</script>
+<script>
+    function searchFunction(value, kategoriId) {
+        var input, filter, table, tr, td1, td2, i, txtValue1, txtValue2;
+        filter = value.toUpperCase();
+        table = document.getElementById("tablesDomain-" + kategoriId);
+        console.log(table);
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td1 = tr[i].getElementsByTagName("td")[0];
+            td2 = tr[i].getElementsByTagName("td")[1];
+            if (td1 && td2) {
+                txtValue1 = td1.textContent || td1.innerText;
+                txtValue2 = td2.textContent || td2.innerText;
+
+                var combinedText = txtValue1 + ' ' + txtValue2;
+                if (combinedText.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+<script>
+    var allNamaDomainApi = [];
+    const data = JSON.parse('{!! json_encode($apiDomain) !!}');
+    data.forEach(item => {
+        allNamaDomainApi.push(item.nama_domain);
+    });
+
+    $("#nama_domain").autocomplete({
+        source: allNamaDomainApi
+    });
 </script>

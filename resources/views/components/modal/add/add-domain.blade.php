@@ -1,6 +1,6 @@
 <!-- Main modal -->
 <div id="addDomainModal" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-none backdrop-blur-md">
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full bg-none h-screen backdrop-blur-md">
     <form class="relative w-full max-w-2xl max-h-full" action="{{ route('domain.store') }}" method="POST">
         @csrf
         @method('POST')

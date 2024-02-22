@@ -375,3 +375,7 @@
 .fade-in-visible{
   transition: opacity 0.5s ease-in-out;
 }
+
+.select2-container{
+  font-size: 14px !important;
+}

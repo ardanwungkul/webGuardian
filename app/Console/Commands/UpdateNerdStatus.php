@@ -34,11 +34,10 @@ class UpdateNerdStatus extends Command
             $threeDaysAgo = now()->subDays(3);
 
             if ($updateDate->lte($threeDaysAgo)) {
-                $domain->update(['status_nerd' => 'Undone']);
+                $domain->update(['status_nerd' => 'UnDone', 'status_sitemap' => 'Undone']);
 
                 $this->info("Domain $domain->nama_domain status updated to Undone.");
             }
         }
-        $this->info('Nerd Status update completed.');
     }
 }

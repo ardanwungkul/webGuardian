@@ -3,17 +3,24 @@
 namespace App\Http\Controllers;
 
 use Alaouy\Youtube\Facades\Youtube as FacadesYoutube;
+use App\Models\User;
 use App\Models\Youtube;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class YoutubeController extends Controller
 {
     public function index()
     {
-        $youtube = Youtube::all()->sortByDesc('created_at');
-        return view('master.youtube.index', compact('youtube'));
+        if (Auth::user()->isAdmin == true) {
+            $youtube = Youtube::all()->sortByDesc('created_at');
+        } else {
+            $youtube = Auth::user()->youtubes;
+        }
+        $users = User::where('isAdmin', false)->get();
+        return view('master.youtube.index', compact('youtube', 'users'));
     }
     public function store(Request $request)
     {
@@ -34,6 +41,7 @@ class YoutubeController extends Controller
         $youtube->judul = $request->judul;
         $youtube->keterangan = $request->keterangan;
         $youtube->save();
+        $youtube->users()->syncWithoutDetaching($request->user_id);
         setcookie('isShowNotification', 'true');
         return redirect()->back()->with(['success' => 'Berhasil Menambahkan Youtube']);
     }
@@ -75,7 +83,11 @@ class YoutubeController extends Controller
     }
     public function show(Youtube $youtube)
     {
-        $youtubeAll = Youtube::all();
+        if (Auth::user()->isAdmin == true) {
+            $youtubeAll = Youtube::all();
+        } else {
+            $youtubeAll = Auth::user()->youtubes;
+        }
         return view('master.youtube.show', compact('youtube', 'youtubeAll'));
     }
     public function apiYoutube(Request $request)

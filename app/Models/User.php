@@ -50,4 +50,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Domain::class);
     }
+    public function youtubes()
+    {
+        return $this->belongsToMany(Youtube::class, 'user_youtubes');
+    }
 }
