@@ -20,6 +20,9 @@
                                 Nama Domain
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Kategori
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Nama User
                             </th>
                             <th scope="col" class="px-6 py-3 text-center">
@@ -52,11 +55,20 @@
                     name: 'nama_domain'
                 },
                 {
+                    data: 'kategori',
+                    name: 'kategori',
+                    render: function(data) {
+
+                        return data.nama_kategori;
+                    }
+                },
+                {
                     data: 'user',
                     name: 'user',
                     render: function(data) {
                         if (data) {
-                            return data.name;
+                            return '<a href="/reports/user/' + data.id + '">' + data.name +
+                                '</a>';
                         } else {
                             return '';
                         }

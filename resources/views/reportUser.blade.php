@@ -3,21 +3,18 @@
     <div id="report" class="min-h-screen">
         <div class=" rounded-lg p-10">
 
-            <div class="-my-6">
-
-
-                @if (isset($domain->reports) && count($domain->reports) > 0)
+            <div class="">
+                @if (isset($domain))
                     @php
-                        $groupedData = $domain->reports->sortBy('tanggal_report')->groupBy(function ($item) {
-                            return date('Y-m-d', strtotime($item->tanggal_report));
-                        });
+                        foreach ($domain as $items) {
+                            $groupedData[$items->id] = $items->reports
+                                ->sortBy('tanggal_report')
+                                ->groupBy(function ($item) {
+                                    return date('Y-m-d', strtotime($item->tanggal_report));
+                                });
+                        }
                     @endphp
-
-
-                    <div class=" font-extrabold text-2xl mb-1 sm:mb-0 ml-[6.5rem] text-center">
-                        Report
-                        {{ $domain->kategori->nama_kategori }} {{ $domain->nama_domain }}</div>
-                    <div>
+                    <div class=" flex gap-3">
                         <label class="switch-name">
                             <input type="checkbox" class="checkbox" id="toggleItems">
                             <div class="back"></div>
@@ -33,8 +30,22 @@
                                     clip-rule="evenodd" />
                             </svg>
                         </label>
+                        <div>
+                            <select class="rounded-full bg-[#5050e5] text-white text-sm border-none h-full"
+                                id="selectDomain" onchange="selectDomain(this.value)">
+                                @foreach ($domain as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_domain }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    @foreach ($groupedData as $date => $items)
+            </div>
+            @foreach ($domain as $domains)
+                <div id="domain-{{ $domains->id }}" style="display:none;">
+                    <div class=" font-extrabold text-2xl mb-1 ml-[6.5rem] text-center mt-10">
+                        Report
+                        {{ $domains->kategori->nama_kategori }} {{ $domains->nama_domain }}</div>
+                    @foreach ($groupedData[$domains->id] as $date => $items)
                         <div class="relative sm:pl-44 pb-6 group">
                             <div
                                 class="flex sm:flex-row items-start mb-1 group-last:before:hidden before:absolute sm:before:left-0 before:h-full before:px-px before:bg-slate-300 before:ml-[9.5rem] before:self-start before:-translate-x-1/2 before:translate-y-3 after:absolute after:left-0 after:w-2 after:h-2 after:bg-indigo-600 after:border-4 after:box-content after:border-slate-50 after:rounded-full after:ml-[9.5rem] after:-translate-x-1/2 after:translate-y-1.5">
@@ -133,10 +144,12 @@
                             @endforeach
                         </div>
                     @endforeach
-                @else
-                    <div class=" font-extrabold text-2xl text-center">
-                        Tidak Ada Laporan Tersedia</div>
-                    <div>
+                </div>
+            @endforeach
+        @else
+            <div class=" font-extrabold text-2xl text-center">
+                Tidak Ada Laporan Tersedia</div>
+            <div>
                 @endif
             </div>
         </div>
@@ -170,4 +183,18 @@
             });
         }
     });
+</script>
+<script>
+    selectDomain(document.getElementById('selectDomain').value);
+
+    function selectDomain(selectedValue) {
+        document.querySelectorAll('[id^="domain-"]').forEach(function(element) {
+            element.style.display = 'none';
+        });
+
+        var selectedDiv = document.getElementById('domain-' + selectedValue);
+        if (selectedDiv) {
+            selectedDiv.style.display = 'block';
+        }
+    }
 </script>

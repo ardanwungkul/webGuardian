@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reports/create/{domain}', [ReportController::class, 'createReport'])->name('reports.create');
     Route::get('/reports/result/{domain}/{slug}', [ReportController::class, 'result'])->name('reports.result');
     Route::post('/reports/{domain}', [ReportController::class, 'store'])->name('reports.store');
+    Route::get('reports/user/{user}', [ReportController::class, 'reportUser'])->name('reports.user');
 });
 
 

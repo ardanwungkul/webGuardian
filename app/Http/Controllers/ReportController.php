@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Domain;
 use App\Models\Report;
+use App\Models\User;
 use App\Services\Woowa\Woowa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,9 +15,9 @@ class ReportController extends Controller
     public function getData(Request $request)
     {
         if (Auth::user()->isAdmin == true) {
-            $data = Domain::with('user')->get();
+            $data = Domain::with('user', 'kategori')->get();
         } else {
-            $data = Domain::where('user_id', Auth::user()->id)->with('user')->get();
+            $data = Domain::where('user_id', Auth::user()->id)->with('user', 'kategori')->get();
         }
         if ($request->ajax()) {
             return DataTables::of($data)
@@ -81,6 +82,11 @@ class ReportController extends Controller
     {
         $report = Report::where('domain_id', $domain->id)->get();
         return view('report', compact('domain', 'report'));
+    }
+    public function reportUser(User $user)
+    {
+        $domain = Domain::whereHas('reports')->where('user_id', $user->id)->get();
+        return view('reportUser', compact('domain'));
     }
     public function edit(Report $report)
     {
