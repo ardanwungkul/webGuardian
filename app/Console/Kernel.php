@@ -13,8 +13,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('update:nerd-status')->dailyAt('10:00');
+        $schedule->command('update:status-backlink')->monthlyOn(1, '05:00');
     }
-
     /**
      * Register the commands for the application.
      */

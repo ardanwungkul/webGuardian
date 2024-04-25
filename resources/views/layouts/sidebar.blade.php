@@ -1,4 +1,4 @@
-<div id="mySidebar" class="sidebar cp-1 flex flex-col gap-3 pt-10 px-1">
+<div id="mySidebar" class="sidebar cp-1 md:flex flex-col gap-3 pt-10 px-1 hidden">
 
     <ul class="space-y-2 font-medium relative h-full">
         <li class="item-sidebar">
@@ -34,7 +34,7 @@
                     <path
                         d="M14 4H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM2 16v-6h12v6H2Z" />
                 </svg>
-                <span class="ml-3 text-hidden">Domain</span>
+                <span class="ml-3 text-hidden">Domain Client</span>
             </a>
         </li>
         <li class="item-sidebar">
@@ -66,7 +66,7 @@
                         </g>
                     </g>
                 </svg>
-                <span class="ml-3 text-hidden">Youtube</span>
+                <span class="ml-3 text-hidden">Video Tutorial</span>
             </a>
         </li>
         <li class="item-sidebar">
@@ -102,7 +102,20 @@
                         </g>
                     </g>
                 </svg>
-                <span class="ml-3 text-hidden">Report</span>
+                <span class="ml-3 text-hidden">Report SEO</span>
+            </a>
+        </li>
+        <li class="item-sidebar">
+            <a href="{{ route('folder.index') }}"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <svg class="flex-shrink-0 w-5 h-5 fill-gray-500 transition duration-75 dark:fill-gray-400 group-hover:fill-gray-900 dark:group-hover:fill-white"
+                    version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve">
+                    <path fill-rule="evenodd"
+                        d="M3 6a2 2 0 0 1 2-2h5.532a2 2 0 0 1 1.536.72l1.9 2.28H3V6Zm0 3v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9H3Z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span class="ml-3 text-hidden">Folder Spintax</span>
             </a>
         </li>
 
@@ -127,8 +140,8 @@
         </li>
     </ul>
     <button class="togglebtn w-3" id="togglebtn" onclick="toggleNav()">
-        <svg class="w-7 h-7 z-10 text-white cp-1 rounded-full p-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            fill="none" viewBox="0 0 14 10">
+        <svg class="w-7 h-7 z-10 text-white cp-1 rounded-full p-1" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
             <path stroke="currentColor" style="display: none" id="arrow-right" stroke-linecap="round"
                 stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
             <path stroke="currentColor" id="arrow-left" stroke-linecap="round" stroke-linejoin="round"

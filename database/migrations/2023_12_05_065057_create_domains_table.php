@@ -19,6 +19,8 @@ return new class extends Migration
             $table->enum('status_keterangan', ['Running', 'Done'])->default('Running');
             $table->enum('status_sitemap', ['Undone', 'Done'])->default('Undone');
             $table->enum('status_nerd', ['UnDone', 'Done'])->default('Undone');
+            $table->enum('status_artikel_unik', ['aktif', 'nonaktif', 'disabled'])->default('nonaktif');
+            $table->enum('status_backlink', ['aktif', 'nonaktif', 'disabled'])->default('nonaktif');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('kategori_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

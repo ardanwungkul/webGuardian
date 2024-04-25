@@ -4,18 +4,28 @@
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                    {{ $report->judul }}
-                </h3>
+            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <div>
+                    <h3 class="md:text-lg text-base font-semibold text-gray-900 dark:text-white">
+                        {{ $report->judul }}
+                    </h3>
+                    <p class="text-xs">{{ $report->tanggal_report }}</p>
+                </div>
                 <div class="flex gap-2">
                     @if ($report->link_youtube)
-                        <button>
-                            <a href="{{ $report->link_youtube }}" class="fa-brands fa-youtube"></a>
+                        <button
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
+                            <a href="{{ $report->link_youtube }}" class="fa-brands fa-youtube "></a>
+                        </button>
+                    @endif
+                    @if (Auth::user() && Auth::user()->isAdmin == true)
+                        <button
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
+                            <a href="{{ route('report.edit', $report->id) }}" class="fa-solid fa-pen"></a>
                         </button>
                     @endif
                     <button type="button"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                         data-modal-hide="reportModal-{{ $report->id }}">
 
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -38,7 +48,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="bg-white rounded-lg custom-content ">
+                    <div class="bg-white rounded-lg custom-content custom-font-size md:text-base text-sm">
                         {!! html_entity_decode($report->report) !!}
                     </div>
                 </div>

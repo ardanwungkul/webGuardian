@@ -1,20 +1,15 @@
 <x-app-layout>
+    <div id="report" class="min-h-screen bg-white">
+        <div class=" rounded-lg md:p-10 p-3">
 
-    <div id="report" class="min-h-screen">
-        <div class=" rounded-lg p-10">
-
-            <div class="-my-6">
-
-
+            <div class="md:-my-6">
                 @if (isset($domain->reports) && count($domain->reports) > 0)
                     @php
                         $groupedData = $domain->reports->sortBy('tanggal_report')->groupBy(function ($item) {
                             return date('Y-m-d', strtotime($item->tanggal_report));
                         });
                     @endphp
-
-
-                    <div class=" font-extrabold text-2xl mb-1 sm:mb-0 ml-[6.5rem] text-center">
+                    <div class=" font-extrabold text-2xl mb-1 md:mb-0 md:ml-[6.5rem] text-center">
                         Report
                         {{ $domain->kategori->nama_kategori }} {{ $domain->nama_domain }}</div>
                     <div>
@@ -35,15 +30,15 @@
                         </label>
                     </div>
                     @foreach ($groupedData as $date => $items)
-                        <div class="relative sm:pl-44 pb-6 group">
+                        <div class="relative md:pl-44 pb-6 group">
                             <div
-                                class="flex sm:flex-row items-start mb-1 group-last:before:hidden before:absolute sm:before:left-0 before:h-full before:px-px before:bg-slate-300 before:ml-[9.5rem] before:self-start before:-translate-x-1/2 before:translate-y-3 after:absolute after:left-0 after:w-2 after:h-2 after:bg-indigo-600 after:border-4 after:box-content after:border-slate-50 after:rounded-full after:ml-[9.5rem] after:-translate-x-1/2 after:translate-y-1.5">
+                                class="flex md:flex-row items-start mb-1 group-last:before:hidden before:absolute md:before:left-0 before:h-full before:px-px before:bg-slate-300 md:before:ml-[9.5rem] before:self-start before:-translate-x-1/2 before:translate-y-3 after:absolute after:left-0 after:w-2 after:h-2 after:bg-indigo-600 after:border-4 after:box-content after:border-slate-50 after:rounded-full md:after:ml-[9.5rem] after:-translate-x-1/2 after:translate-y-1.5">
                                 <time
-                                    class="sm:absolute left-0 translate-y-0.5 inline-flex items-center justify-center text-xs font-semibold uppercase w-min whitespace-nowrap h-6 mb-3 sm:mb-0 text-emerald-600 bg-emerald-100 rounded-full px-3">{{ date('j F Y', strtotime($date)) }}</time>
+                                    class="md:absolute left-0 translate-y-0.5 inline-flex items-center justify-center text-xs font-semibold uppercase w-min whitespace-nowrap h-6 mb-3 md:mb-0 ml-3 md:ml-3 text-emerald-600 bg-emerald-100 rounded-full px-3">{{ date('j F Y', strtotime($date)) }}</time>
 
                             </div>
                             <!-- Content -->
-                            <div class="gridItems fade-in">
+                            <div class="gridItems fade-in md:ml-0 ml-3">
                                 <div class="text-slate-500 border p-3 rounded-lg grid-cols-2 gap-3 grid">
                                     @foreach ($items as $item)
                                         <div class="w-full flex flex-col justify-between cursor-pointer"
@@ -54,30 +49,36 @@
                                                     @if ($item->image !== 'placeholder.png')
                                                         <div class="w-full">
                                                             <img src="{{ asset('storage/images/report') }}/{{ $item->image }}"
-                                                                class="w-full object-contain rounded-l-lg h-40">
+                                                                class="w-full object-contain rounded-l-lg h-28 md:h-40">
                                                         </div>
                                                     @elseif ($item->image == 'placeholder.png' && $item->link_youtube)
                                                         <div class="w-full">
                                                             <img src="{{ asset('storage/images/report') }}/{{ $item->image }}"
-                                                                class="w-full object-contain rounded-l-lg h-40">
+                                                                class="w-full object-contain rounded-l-lg h-28 md:h-40">
                                                         </div>
                                                     @elseif($item->image == 'placeholder.png' && $item->link_youtube == null)
                                                         <div class="w-full">
                                                             <img src="{{ asset('storage/images/report') }}/{{ $item->image }}"
-                                                                class="w-full object-contain rounded-l-lg h-40">
+                                                                class="w-full object-contain rounded-l-lg h-28 md:h-40">
                                                         </div>
                                                     @endif
                                                     <div
                                                         class="col-span-2 flex flex-col justify-between py-3 px-3 gap-1">
-                                                        <p class="truncate text-black font-bold">
+                                                        <p class="truncate text-black font-bold text-sm md:text-base">
                                                             {{ $item->judul }}
                                                         </p>
-                                                        <div class="line-clamp-2 text-xs">
-                                                            {!! $item->report !!}
+                                                        <div class="line-clamp-2 text-xs md:text-sm">
+                                                            {!! preg_replace('/font-size:\s*\d+(?:\.\d+)?(?:px|pt);?/', 'font-size: 14px;', $item->report) !!}
                                                         </div>
-                                                        <p class="text-xs">
-                                                            {{ date('j F Y', strtotime($date)) }}
-                                                        </p>
+                                                        <div class="flex justify-between">
+                                                            <button
+                                                                class="py-1 px-3 rounded-lg cp-1 text-xs hover:bg-teal-200">Lihat
+                                                                Detail</button>
+                                                            <p
+                                                                class="text-xs cp-1 w-min whitespace-nowrap rounded-lg px-3 py-1">
+                                                                {{ date('j F Y', strtotime($date)) }}
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -86,7 +87,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="listItems fade-in-visible">
+                            <div class="listItems fade-in-visible md:ml-0 ml-3">
                                 <div class="text-slate-500 border p-3 rounded-lg space-y-3">
                                     @foreach ($items as $item)
                                         <div class="w-full flex flex-col justify-between cursor-pointer"
@@ -97,29 +98,36 @@
                                                     @if ($item->image !== 'placeholder.png')
                                                         <div class="w-full">
                                                             <img src="{{ asset('storage/images/report') }}/{{ $item->image }}"
-                                                                class="w-full object-contain rounded-l-lg h-40">
+                                                                class="w-full object-contain rounded-l-lg h-28 md:h-40">
                                                         </div>
                                                     @elseif ($item->image == 'placeholder.png' && $item->link_youtube)
                                                         <div class="w-full">
                                                             <img src="{{ asset('storage/images/report') }}/{{ $item->image }}"
-                                                                class="w-full object-contain rounded-l-lg h-40">
+                                                                class="w-full object-contain rounded-l-lg h-28 md:h-40">
                                                         </div>
                                                     @elseif($item->image == 'placeholder.png' && $item->link_youtube == null)
                                                         <div class="w-full">
                                                             <img src="{{ asset('storage/images/report') }}/{{ $item->image }}"
-                                                                class="w-full object-contain rounded-l-lg h-40">
+                                                                class="w-full object-contain rounded-l-lg h-28 md:h-40">
                                                         </div>
                                                     @endif
-                                                    <div class="col-span-2 flex flex-col justify-between py-3">
-                                                        <p class="truncate text-black font-bold">
+                                                    <div
+                                                        class="col-span-2 flex flex-col justify-between py-3 px-3 gap-1">
+                                                        <p class="truncate text-black font-bold text-sm md:text-base">
                                                             {{ $item->judul }}
                                                         </p>
-                                                        <div class="line-clamp-3">
-                                                            {!! $item->report !!}
+                                                        <div class="line-clamp-3 text-xs md:text-sm">
+                                                            {!! preg_replace('/font-size:\s*\d+(?:\.\d+)?(?:px|pt);?/', 'font-size: 14px;', $item->report) !!}
                                                         </div>
-                                                        <p class="text-xs">
-                                                            {{ date('j F Y', strtotime($date)) }}
-                                                        </p>
+                                                        <div class="flex justify-between">
+                                                            <p
+                                                                class="text-xs cp-1 w-min whitespace-nowrap rounded-lg px-3 py-1">
+                                                                {{ date('j F Y', strtotime($date)) }}
+                                                            </p>
+                                                            <button
+                                                                class="py-1 px-3 rounded-lg cp-1 text-xs hover:bg-teal-200">Lihat
+                                                                Detail</button>
+                                                        </div>
                                                     </div>
                                                 </div>
 

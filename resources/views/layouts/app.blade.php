@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@props(['noScrollbar' => ''])
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ $noScrollbar == true ? 'no-scrollbar' : '' }}">
 
 <head>
     <meta charset="utf-8">
@@ -16,13 +17,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.dataTables.css" rel="stylesheet" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css'])
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-white">
+    <div class="min-h-screen bg-gray-200">
         <div id="main">
 
             <!-- Page Heading -->
@@ -36,8 +38,11 @@
 
             <!-- Page Content -->
             <main>
-                @include('layouts.sidebar')
-                <div class="ml-[200px]">
+                @if (Auth::user())
+                    @include('layouts.sidebar')
+                    @include('layouts.bottombar')
+                @endif
+                <div class=" {{ Auth::user() ? 'md:ml-[200px]' : '' }} md:pb-0 pb-20">
                     @if (count($errors) > 0)
                         <div class="alertError bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mx-3 mt-2"
                             role="alert">
@@ -86,6 +91,8 @@
 <script src="https://cdn.tiny.cloud/1/jkhiia9kovq641lwnylmyfhbnd2wio1chdku3lvam2mh8pmk/tinymce/6/tinymce.min.js"
     referrerpolicy="origin"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 <script>
     tinymce.init({
         selector: 'textarea#reports',

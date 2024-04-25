@@ -144,6 +144,20 @@ class DomainController extends Controller
         $domain->save();
         return response('Berhasil Mengubah Status');
     }
+    public function statusArtikelUnik(Request $request)
+    {
+        $domain = Domain::findOrFail($request->domain);
+        $domain->status_artikel_unik = $request->status_artikel_unik;
+        $domain->save();
+        return response('Berhasil Mengubah Status');
+    }
+    public function statusBacklink(Request $request)
+    {
+        $domain = Domain::findOrFail($request->domain);
+        $domain->status_backlink = $request->status_backlink;
+        $domain->save();
+        return response('Berhasil Mengubah Status');
+    }
     public function getData(Request $request)
     {
         if (Auth::user()->isAdmin == true) {

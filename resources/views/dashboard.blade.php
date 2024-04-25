@@ -15,7 +15,7 @@
             </div>
         @endif
         <div class="px-3">
-            <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+            <div class="mb-4 border-b border-gray-200 dark:border-gray-700 bg-white rounded-lg">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab"
                     data-tabs-toggle="#myTabContent" role="tablist">
                     <li class="mr-2" role="presentation">

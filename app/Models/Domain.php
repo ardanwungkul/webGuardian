@@ -19,7 +19,9 @@ class Domain extends Model
         'status_nerd',
         'slug',
         'internal_report',
-        'status_nerd_update'
+        'status_nerd_update',
+        'status_artikel_unik',
+        'status_backlink',
     ];
 
     public function kategori()

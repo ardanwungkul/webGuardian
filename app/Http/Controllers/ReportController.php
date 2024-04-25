@@ -15,9 +15,9 @@ class ReportController extends Controller
     public function getData(Request $request)
     {
         if (Auth::user()->isAdmin == true) {
-            $data = Domain::with('user', 'kategori')->get();
+            $data = Domain::with('user', 'kategori', 'reports')->get();
         } else {
-            $data = Domain::where('user_id', Auth::user()->id)->with('user', 'kategori')->get();
+            $data = Domain::where('user_id', Auth::user()->id)->with('user', 'kategori', 'reports')->get();
         }
         if ($request->ajax()) {
             return DataTables::of($data)
@@ -25,15 +25,12 @@ class ReportController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn = '
                             <div class="flex items-center justify-center gap-2">
-                                <a href="/reports/create/' . $row->id . '">
-                                    Buat Report
+                                <a href="/reports/create/' . $row->id . '" class="fa-solid fa-plus">
                                 </a>
-                                <a href="' . $row->report . '" target="_blank">
-                                    Hasil Report
+                                <button class="editButton fa-solid fa-pen" data-domain-id="' . $row->id . '" data-domain-id="' . $row->id . '">
+                                </button>
+                                <a href="' . $row->report . '" target="_blank" class="fa-solid fa-list">
                                 </a>
-                                <button class="editButton" data-domain-id="' . $row->id . '" data-domain-id="' . $row->id . '">
-                                Edit
-                            </button>
                             </div>
                         ';
                     return $btn;
