@@ -91,7 +91,27 @@
                     }
                 },
                 {
-                    data: 'id'
+                    data: 'reports',
+                    name: 'reports',
+                    render: function(data) {
+                        if (data.length > 0) {
+                            data.sort(function(a, b) {
+                                return new Date(b.tanggal_report) - new Date(a
+                                    .tanggal_report);
+                            });
+                            // Mengubah format tanggal
+                            var options = {
+                                day: '2-digit',
+                                month: 'long',
+                                year: 'numeric'
+                            };
+                            var formattedDate = new Date(data[0].tanggal_report)
+                                .toLocaleDateString('en-GB', options);
+                            return '<p class="text-center">' + formattedDate + '</p>';
+                        } else {
+                            return '<p class="text-gray-300 text-center">Tidak Ada Report</p>';
+                        }
+                    }
                 },
                 {
                     data: 'kategori',
