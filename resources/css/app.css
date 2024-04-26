@@ -581,3 +581,13 @@
   opacity: 1;
   transform: translateY(0);
 }
+#tinyMceRequired {
+  opacity: 0;
+  transition: opacity 0.5s, transform 0.5s;
+  transform: translateY(-50px);
+}
+
+#tinyMceRequired.show {
+  opacity: 1;
+  transform: translateY(0);
+}

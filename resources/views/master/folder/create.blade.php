@@ -31,7 +31,7 @@
                         <label for="spintax"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Spintax*</label>
                         <textarea name="spintax" id="spintax" required></textarea>
-                        <div id="tinyMceRequired" class=" fixed top-10  w-[calc(100%-200px)] hidden">
+                        <div id="tinyMceRequired" class=" fixed top-10  w-[calc(100%-200px)] opacity-0">
                             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 error whitespace-nowrap mx-auto w-min"
                                 role="alert">
                                 <span class="font-medium">Gagal Menyimpan!</span> Field Spintax tidak boleh kosong !!
@@ -81,13 +81,15 @@
     $(document).on('click', '#submit', chkSubmit);
 
     function chkSubmit() {
+        var alert = document.getElementById('tinyMceRequired')
         var msg = $('#spintax').val();
         var textmsg = $.trim($(msg).text());
         if (textmsg == '') {
-            $('#tinyMceRequired').removeClass('hidden');
+            alert.classList.add('show');
+
             setTimeout(function() {
-                $('#tinyMceRequired').addClass('hidden');
-            }, 3000);
+                alert.classList.remove('show');
+            }, 1500);
             return false;
         } else {
             $('#tinyMceRequired').addClass('hidden');
