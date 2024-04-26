@@ -40,6 +40,8 @@
                             $kategoris = $item->domain->pluck('kategori')->unique();
                         @endphp
                         <div data-kategori="{{ $kategoris->pluck('id') }}"
+                            data-modal-target="showSpintax-{{ $item->id }}"
+                            data-modal-toggle="showSpintax-{{ $item->id }}"
                             class="folderItem p-2 border border-gray-200 shadow-lg rounded-lg hover:bg-gray-100 cursor-pointer flex flex-col gap-1 justify-between">
                             <div class="flex gap-1 overflow-y-scroll no-scrollbar">
                                 @foreach ($kategoris as $kategori)
@@ -54,14 +56,25 @@
                                 {!! preg_replace('/font-size:\s*\d+(?:\.\d+)?(?:px|pt);?/', 'font-size: 12px;', $item->spintax) !!}
                             </div>
                         </div>
+                        <x-modal.show.show-spintax :spintax="$item"></x-modal.show.show-spintax>
                     @endforeach
                 </div>
             </div>
         </div>
     </div>
+
+
+    <div id="successCopy"
+        class="flex items-center w-min max-w-xs px-4 py-3 space-x-4 rtl:space-x-reverse text-gray-500 bg-green-200 divide-x rtl:divide-x-reverse divide-gray-400 rounded-lg shadow space-x fixed z-50 bottom-5 right-5"
+        role="alert">
+        <div class="fa-solid fa-copy"></div>
+        <div class="ps-4 text-sm font-normal whitespace-nowrap">Spintax Copied Successfully.</div>
+    </div>
+
 </x-app-layout>
 <script>
     $(document).ready(function() {
+
         $('#kategoriFilter').on('change', function() {
             var value = $(this).val();
             $('.folderItem').each(function() {
@@ -77,5 +90,18 @@
                 }
             });
         });
+
     });
+
+    function copySpintaxToClipboard(button) {
+        var id = button.getAttribute('data-spintax-id');
+        var spintax = document.querySelector('.copyText[data-spintax-id="' + id + '"]').innerText;
+        const alert = document.getElementById('successCopy');
+        navigator.clipboard.writeText(spintax)
+        alert.classList.add('show');
+
+        setTimeout(function() {
+            alert.classList.remove('show');
+        }, 1500);
+    }
 </script>

@@ -12,12 +12,6 @@
                     <p class="text-xs">{{ $report->tanggal_report }}</p>
                 </div>
                 <div class="flex gap-2">
-                    @if ($report->link_youtube)
-                        <button
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
-                            <a href="{{ $report->link_youtube }}" class="fa-brands fa-youtube "></a>
-                        </button>
-                    @endif
                     @if (Auth::user() && Auth::user()->isAdmin == true)
                         <button
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
@@ -42,9 +36,20 @@
                 <div>
                     <div>
                         @if ($report->image !== 'placeholder.png')
-                            <div class="w-full">
+                            <div class="w-full {{ $report->link_youtube ? 'grid grid-cols-2 gap-2' : '' }}">
                                 <img src="{{ asset('storage/images/report') }}/{{ $report->image }}"
                                     class="w-full h-[40vh] object-contain">
+                                @if ($report->link_youtube)
+                                    <div>
+                                        <iframe src=" {{ $report->link_youtube }}" class="h-full w-full"
+                                            frameborder="0"></iframe>
+                                    </div>
+                                @endif
+                            </div>
+                        @elseif($report->image == 'placeholder.png' && $report->link_youtube)
+                            <div class="w-full">
+                                <iframe src=" {{ $report->link_youtube }}" class="h-full w-full min-h-[200px]"
+                                    frameborder="0"></iframe>
                             </div>
                         @endif
                     </div>
@@ -54,5 +59,6 @@
                 </div>
             </div>
         </div>
+        
     </div>
 </div>

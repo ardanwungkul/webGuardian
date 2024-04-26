@@ -5,7 +5,7 @@
             <div class="md:-my-6">
                 @if (isset($domain->reports) && count($domain->reports) > 0)
                     @php
-                        $groupedData = $domain->reports->sortBy('tanggal_report')->groupBy(function ($item) {
+                        $groupedData = $domain->reports->sortByDesc('tanggal_report')->groupBy(function ($item) {
                             return date('Y-m-d', strtotime($item->tanggal_report));
                         });
                     @endphp

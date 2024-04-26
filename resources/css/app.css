@@ -570,3 +570,14 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+#successCopy {
+  opacity: 0;
+  transition: opacity 0.5s, transform 0.5s;
+  transform: translateY(-50px);
+}
+
+#successCopy.show {
+  opacity: 1;
+  transform: translateY(0);
+}
