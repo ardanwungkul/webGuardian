@@ -212,7 +212,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex justify-between items-center gap-3">
+            <div class="flex justify-between items-start gap-3">
                 <div class="w-1/2 p-5 bg-white rounded-lg">
                     <div class="p-2 font-medium text-lg">Report Activity</div>
                     <input type="text" class="text-sm rounded-lg mb-2 w-full"
