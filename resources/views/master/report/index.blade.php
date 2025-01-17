@@ -90,29 +90,124 @@
                             ')</span></p>'
                     }
                 },
+                // {
+                //     data: 'reports',
+                //     name: 'reports',
+                //     render: function(data) {
+                //         if (data.length > 0) {
+                //             data.sort(function(a, b) {
+                //                 return new Date(b.tanggal_report) - new Date(a
+                //                     .tanggal_report);
+                //             });
+                //             // Mengubah format tanggal
+                //             var options = {
+                //                 day: '2-digit',
+                //                 month: 'long',
+                //                 year: 'numeric'
+                //             };
+                //             var formattedDate = new Date(data[0].tanggal_report)
+                //                 .toLocaleDateString('en-GB', options);
+                //             return '<p class="text-center">' + formattedDate + '</p>';
+                //         } else {
+                //             return '<p class="text-gray-300 text-center">Tidak Ada Report</p>';
+                //         }
+                //     }
+                // },
+                // hari hari
+                // {
+                //     data: 'reports',
+                //     name: 'reports',
+                //     render: function(data) {
+                //         if (data.length > 0) {
+                //             // Sort data berdasarkan tanggal terbaru
+                //             data.sort(function(a, b) {
+                //                 return new Date(b.tanggal_report) - new Date(a
+                //                     .tanggal_report);
+                //             });
+
+                //             // Format tanggal
+                //             var options = {
+                //                 day: '2-digit',
+                //                 month: 'long',
+                //                 year: 'numeric'
+                //             };
+                //             var lastReportDate = new Date(data[0].tanggal_report);
+                //             var formattedDate = lastReportDate.toLocaleDateString('en-GB',
+                //                 options);
+
+                //             // Menghitung selisih hari
+                //             var today = new Date();
+                //             var oneDayInMillis = 24 * 60 * 60 * 1000;
+                //             var differenceInDays = Math.floor((today - lastReportDate) /
+                //                 oneDayInMillis);
+
+                //             // Menentukan teks untuk "N hari yang lalu"
+                //             var timeAgoText = differenceInDays + ' hari yang lalu';
+
+                //             // Jika hari ini, tampilkan "Hari ini"
+                //             if (differenceInDays === 0) {
+                //                 timeAgoText = 'Hari ini';
+                //             }
+
+                //             // Tampilkan tanggal dengan keterangan selisih hari
+                //             return `<p class="text-center">${formattedDate}<br><span class="text-muted">${timeAgoText}</span></p>`;
+                //         } else {
+                //             return '<p class="text-gray-300 text-center">Tidak Ada Report</p>';
+                //         }
+                //     }
+                // },
                 {
                     data: 'reports',
                     name: 'reports',
                     render: function(data) {
                         if (data.length > 0) {
+                            // Sort data berdasarkan tanggal terbaru
                             data.sort(function(a, b) {
                                 return new Date(b.tanggal_report) - new Date(a
                                     .tanggal_report);
                             });
-                            // Mengubah format tanggal
+
+                            // Format tanggal
                             var options = {
                                 day: '2-digit',
                                 month: 'long',
                                 year: 'numeric'
                             };
-                            var formattedDate = new Date(data[0].tanggal_report)
-                                .toLocaleDateString('en-GB', options);
-                            return '<p class="text-center">' + formattedDate + '</p>';
+                            var lastReportDate = new Date(data[0].tanggal_report);
+                            var formattedDate = lastReportDate.toLocaleDateString('en-GB',
+                                options);
+
+                            // Menghitung selisih waktu
+                            var today = new Date();
+                            var differenceInDays = Math.floor((today - lastReportDate) / (1000 *
+                                60 * 60 * 24));
+                            var differenceInMonths = today.getMonth() - lastReportDate
+                                .getMonth() +
+                                (12 * (today.getFullYear() - lastReportDate.getFullYear()));
+                            var differenceInYears = today.getFullYear() - lastReportDate
+                                .getFullYear();
+
+                            // Menentukan teks waktu
+                            var timeAgoText = '';
+                            if (differenceInYears >= 1) {
+                                timeAgoText = differenceInYears + ' tahun yang lalu';
+                            } else if (differenceInMonths >= 1) {
+                                timeAgoText = differenceInMonths + ' bulan yang lalu';
+                            } else if (differenceInDays >= 1) {
+                                timeAgoText = differenceInDays + ' hari yang lalu';
+                            } else {
+                                timeAgoText = 'Hari ini';
+                            }
+
+                            // Tampilkan tanggal dengan keterangan waktu
+                            return `<p class="text-center">${formattedDate}<br><span class="text-xs">(${timeAgoText})</span></p>`;
                         } else {
                             return '<p class="text-gray-300 text-center">Tidak Ada Report</p>';
                         }
                     }
                 },
+
+
                 {
                     data: 'kategori',
                     name: 'kategori',
