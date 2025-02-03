@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\Woowa\Woowa;
 use Alaouy\Youtube\Facades\Youtube;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Exception\RequestException;
@@ -29,8 +30,17 @@ class DashboardController extends Controller
         $user = User::where('isAdmin', false)->get();
         $isDomain = Domain::count();
         $domain = Domain::with('kategori')->get();
-        $apiResponse = Http::get('https://client.webz.biz/api/domain');
-        $apiDomain = $apiResponse->json();
+        try {
+            $apiResponse = Http::get('https://client.webz.biz/api/domain');
+
+            if ($apiResponse->successful()) {
+                $apiDomain = $apiResponse->json();
+            } else {
+                $apiDomain = [];
+            }
+        } catch (Exception $e) {
+            $apiDomain = [];
+        }
         // $matchingDomain = collect($apiDomain)->filter(function ($apiDomainItem) use ($domain) {
         //     return $domain->contains(function ($dbDomain) use ($apiDomainItem) {
         //         return Str::lower(trim($dbDomain->nama_domain)) === Str::lower(trim($apiDomainItem['nama_domain']));
